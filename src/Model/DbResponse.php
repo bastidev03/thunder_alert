@@ -5,6 +5,8 @@ class DbResponse
 {
     private $result;
     private $num_rows;
+    private $affected_rows;
+    
 
     public function __construct($pg_result)
     {
@@ -17,11 +19,18 @@ class DbResponse
         if($this->num_rows < 0) {
             throw new \Exception("DB_ERROR : Echec de la récupération du nombre de lignes");
         }
+
+        $this->affected_rows = pg_affected_rows($pg_result);
     }
 
-    public function getNumRows()
+    public function getNumRows():int
     {
         //TODO
+    }
+
+    public function getAffectedRows():int
+    {
+        return $this->affected_rows;
     }
 
     public function getRows():array

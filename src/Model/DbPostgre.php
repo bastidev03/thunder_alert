@@ -30,6 +30,7 @@ class DbPostgre
 
         $connect_str = "host={$this->host} port={$this->port} dbname={$this->db_name} user={$this->user} password=".(getenv('DB_PWD'));
 
+        //More robust with PDO
         $this->pg_connection = pg_connect($connect_str);
         if($this->pg_connection === false) {
             throw new \Exception("Database connexion failed");
