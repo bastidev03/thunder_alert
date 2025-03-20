@@ -49,7 +49,7 @@ class CsvReader
         }
     }
 
-    public function get_array()
+    public function getArray()
     {
         $array = fgetcsv($this->file_resource, 1000, ";");
         if($array === false) {

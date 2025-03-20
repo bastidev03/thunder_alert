@@ -28,11 +28,7 @@ class ImportContactCommand extends Command{
 
         $output->writeln("Importing contacts from : \"$file_path\"");
 
-        $csv_data = $csv_reader->get_array();
-
-
-
-
+        $csv_data = $csv_reader->getArray();
 
 
 
