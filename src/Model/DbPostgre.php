@@ -15,21 +15,13 @@ class DbPostgre
     public function __construct()
     {
         //TODO : Install pgAdmin to create and modify local database (or use the migration file)
-        $this->host = getenv('DB_HOST');
-        $this->port = getenv('DB_PORT');
-        $this->db_name = getenv('DB_NAME');
-        $this->user = getenv('DB_USER');
+        $this->host = $_ENV['DB_HOST'];
+        $this->port = $_ENV['DB_PORT'];
+        $this->db_name = $_ENV['DB_NAME'];
+        $this->user = $_ENV['DB_USER'];
 
-        $required_properties = ['host', 'port', 'db_name', 'user'];
-
-        foreach($required_properties as $required_property) {
-            if(!isset($this->$required_property)) {
-                throw new \Exception("Wrong database configuration : $required_property configuration is missing");
-            }
-        }
-
+        //print_r($this);
         $connect_str = "host={$this->host} port={$this->port} dbname={$this->db_name} user={$this->user} password=".(getenv('DB_PWD'));
-
         //More robust with PDO
         $this->pg_connection = pg_connect($connect_str);
         if($this->pg_connection === false) {

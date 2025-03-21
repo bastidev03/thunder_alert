@@ -11,7 +11,8 @@ use Symfony\Component\Console\Logger\ConsoleLogger;
 
 //Project classes
 use App\Lib\CsvReader;
-
+use App\Lib\Logger;
+use App\Repository\Contact;
 
 #[AsCommand(
     name: 'app:import-contact',
@@ -19,30 +20,47 @@ use App\Lib\CsvReader;
 )]
 class ImportContactCommand extends Command{
 
+    const LOG_FILE = 'Import.log';
+
     protected function execute(InputInterface $input, OutputInterface $output):int
     {
         $file_path = $input->getArgument('file_path');
+        $log_msg = '########## BEGIN IMPORT ##########';
+        Logger::log($log_msg);
+        Logger::log($log_msg, self::LOG_FILE);
 
-        //TODO : try/catch ?
-        $csv_reader = new CsvReader($file_path);
+        $log_msg = "Importing contacts from : \"$file_path\"";
+        Logger::log($log_msg);
+        Logger::log($log_msg, self::LOG_FILE);
+        try {
+            $csv_reader = new CsvReader($file_path);
+            $csv_data = $csv_reader->getArray();
+            $contact = new Contact();
 
-        $output->writeln("Importing contacts from : \"$file_path\"");
+            $success_count = 0;
+            $error_count = 0;
 
-        $csv_data = $csv_reader->getArray();
+            foreach($csv_data as $csv_line) {
+                try {
+                    $contact->addContact($csv_line['insee'], $csv_line['telephone']);
+                    $success_count++;
+                } catch (\Exception $exception) {
+                    Logger::log($exception->getMessage());
+                    $error_count++;
+                }
+            }
 
-        //TODO: Continuer
+            $log_msg = "End of import : $success_count success insertions, $error_count failed insertions";
+            Logger::log($log_msg);
+            Logger::log($log_msg, self::LOG_FILE);
 
-        //$logger = new ConsoleLogger($output);
-        //$logger->info('Hello world !');
-
-        //In case of success
-        return Command::SUCCESS;
-
-        //In case of wrong inputs
-        return Command::INVALID;
-
-        //In case of failure
-        return Command::FAILURE;
+            $log_msg = "########## END IMPORT ##########\n\n";
+            Logger::log($log_msg);
+            Logger::log($log_msg, self::LOG_FILE);
+            return Command::SUCCESS;
+        } catch (Exception $exception) {
+            return Command::FAILURE;
+        }        
     }
 
     protected function configure():void

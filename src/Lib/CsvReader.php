@@ -51,11 +51,26 @@ class CsvReader
 
     public function getArray()
     {
-        $array = fgetcsv($this->file_resource, 1000, ";");
-        if($array === false) {
-            throw new \Exception("Fail reading ({$this->file_path}) CSV file");
+        $line = 0;
+        $array = [];
+        $column_mapping = [];
+        while (($line_content = fgetcsv($this->file_resource, 1000, ';')) !== false) {
+            if($line === 0) {
+                foreach($line_content as $column) {
+                    $column_mapping[] = $column;
+                }
+                $line++;
+                continue;
+            }
+            // Ajoute chaque ligne au tableau
+            foreach($line_content as $column => $value)
+            {
+                $line_content[$column_mapping[$column]] = $value;
+                unset($line_content[$column]);
+            }
+            $array[] = $line_content;
+            $line++;
         }
-
         return $array;
     }
 }

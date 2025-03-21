@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Lib\FormatValidator;
 use App\Model\DbPostgre;
 use App\Model\DbResponse;
+use App\Lib\Logger;
 
 class Contact
 {
