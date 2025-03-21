@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-use Symfony\Component\HttpKernel\Log\Logger;
+use Symfony\Component\HttpKernel\Log\Logger as SymfonyLogger;
 
 use App\Lib\FormatValidator;
 use App\Lib\Logger;
@@ -37,7 +37,7 @@ class SmsService
                 content : $message
         \n";
           
-        $http_logger = new Logger();
+        $http_logger = new SymfonyLogger();
         $http_logger->log($log_message);
         Logger::log($log_message, self::LOG_FILE);
     }

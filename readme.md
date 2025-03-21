@@ -26,3 +26,4 @@ Ceci est une application backend qui permet d’importer des destinataires depui
 - Faire une insertion en lots plutôt que d'insérer les lignes une par une (Meilleures perfs)
 - Ajouter la gestion du code pays dans les numéros de téléphone
 - Utiliser PDO pour les transactions BDD (Doctrine interdit => Pas voulu utiliser PDO)
+- Protéger le point d'entrée /alerter des injections SQL (Utiliser PDO)

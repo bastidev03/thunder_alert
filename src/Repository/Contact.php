@@ -38,4 +38,28 @@ class Contact
             throw new \Exception("Contact insertion failed");
         }
     }
+
+    public function getContactByInsee(string $insee):array
+    {
+        if(!FormatValidator::checkInsee($insee)) {
+            throw new \Exception("Wrong insee format ($insee)");
+        }
+
+        $db_response = $this->db_instance->query("
+            SELECT
+                MIN(insee) AS insee,
+                telephone
+
+            FROM contacts
+
+            WHERE
+                insee = '$insee'
+
+            GROUP BY
+                -- To prevent duplicates
+                telephone
+        ");
+
+        return $db_response->getRows();
+    }
 }

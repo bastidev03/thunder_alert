@@ -43,7 +43,6 @@ class DbResponse
                 $array[] = $row;
             }
         }
-
         return $array;
     }
 }
