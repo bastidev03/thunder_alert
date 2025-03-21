@@ -21,7 +21,8 @@ Ceci est une application backend qui permet d’importer des destinataires depui
 
 - Améliorer la robustesse du parsing des champs CSV (Séparateur dynamique via une conf dans le fichier .env, ...)
 - Améliorer la gestion des Erreurs / Exceptions
-- Améliorer la traçabilité des actions (Système de Logger à améliorer => Voir comment faire avec le loggeur Symfony)
+- Améliorer la traçabilité des actions (Système de Logger à améliorer => Voir comment faire avec le loggeur Symfony ou Monolog)
 - Empêcher l'insertion de doublons dans la table contacts
 - Faire une insertion en lots plutôt que d'insérer les lignes une par une (Meilleures perfs)
 - Ajouter la gestion du code pays dans les numéros de téléphone
+- Utiliser PDO pour les transactions BDD (Doctrine interdit => Pas voulu utiliser PDO)

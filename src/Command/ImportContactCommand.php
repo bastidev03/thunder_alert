@@ -22,16 +22,24 @@ class ImportContactCommand extends Command{
 
     const LOG_FILE = 'Import.log';
 
+    const START_COMMAND = '########## BEGIN IMPORT ##########';
+
+    const END_COMMAND = "########## END IMPORT ##########\n";
+
+
     protected function execute(InputInterface $input, OutputInterface $output):int
     {
         $file_path = $input->getArgument('file_path');
-        $log_msg = '########## BEGIN IMPORT ##########';
-        Logger::log($log_msg);
-        Logger::log($log_msg, self::LOG_FILE);
+
+        $symfony_logger = new ConsoleLogger($output);
+        Logger::log(self::START_COMMAND);
+        $symfony_logger->warning(self::START_COMMAND);
+        Logger::log(self::START_COMMAND, self::LOG_FILE);
 
         $log_msg = "Importing contacts from : \"$file_path\"";
         Logger::log($log_msg);
         Logger::log($log_msg, self::LOG_FILE);
+
         try {
             $csv_reader = new CsvReader($file_path);
             $csv_data = $csv_reader->getArray();
@@ -45,7 +53,7 @@ class ImportContactCommand extends Command{
                     $contact->addContact($csv_line['insee'], $csv_line['telephone']);
                     $success_count++;
                 } catch (\Exception $exception) {
-                    Logger::log($exception->getMessage());
+                    $symfony_logger->warning($exception->getMessage());
                     $error_count++;
                 }
             }
@@ -54,11 +62,19 @@ class ImportContactCommand extends Command{
             Logger::log($log_msg);
             Logger::log($log_msg, self::LOG_FILE);
 
-            $log_msg = "########## END IMPORT ##########\n\n";
-            Logger::log($log_msg);
-            Logger::log($log_msg, self::LOG_FILE);
+            Logger::log(self::END_COMMAND);
+            Logger::log(self::END_COMMAND, self::LOG_FILE);
             return Command::SUCCESS;
-        } catch (Exception $exception) {
+
+        } catch (\Exception $exception) {
+
+            $error_msg = "Error during import : ".$exception->getMessage();
+            Logger::log($error_msg, self::LOG_FILE);
+            
+            Logger::log(self::END_COMMAND);
+            Logger::log(self::END_COMMAND, self::LOG_FILE);
+
+            throw($exception);
             return Command::FAILURE;
         }        
     }
