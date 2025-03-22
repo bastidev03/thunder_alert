@@ -24,13 +24,16 @@ Ceci est une application backend qui permet d’importer des destinataires depui
 
 ## Configuration
 
-- Configurer Postgresql
+- Configurer votre serveur Postgresql
 
-    - Créer un utilisateur que l'application pourra utiliser pour exécuter le script de migration et envoyer les requêtes SQL par la suite. (Le superuser postgresql par défaut peut être utilisé)
+    - Via PgAdmin, créer un utilisateur que l'application pourra utiliser pour exécuter le script de migration et envoyer les requêtes SQL par la suite.
 
-    - Modifier si besoin dans le fichier `.env`, les configurations suivantes en cohérence avec les configurations du serveur PostgreSQL que vous souhaitez utiliser  : `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PWD` et `DATABASE_URL`.
+    - Via PgAdmin, créer une nouvelle base de données
+        >Pour ne pas modifier la config, utiliser le nom `thunder_alert`
 
-- Lancer la migrations du model de la BDD vers votre serveur PostgreSQL
+    - Modifier si besoin dans le fichier `.env` à la racine du projet, les configurations suivantes en cohérence avec les configurations du serveur PostgreSQL et de la base de données que vous souhaitez utiliser  : `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PWD`, `DB_NAME` et `DATABASE_URL`.
+
+- Lancer la migrations du model vers la nouvelle BDD créée
     ```bash
         # Assurez-vous que le serveur PostgreSQL est en fonctionnement
         symfony console sql-migrations:execute
