@@ -1,4 +1,21 @@
 {
+    "doctrine/doctrine-bundle": {
+        "version": "2.14",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "2.10",
+            "ref": "c170ded8fc587d6bd670550c43dafcf093762245"
+        },
+        "files": [
+            "./config/packages/doctrine.yaml",
+            "./src/Entity/.gitignore",
+            "./src/Repository/.gitignore"
+        ]
+    },
+    "swouters/sql-migrations-bundle": {
+        "version": "1.0.3"
+    },
     "symfony/console": {
         "version": "6.4",
         "recipe": {
@@ -79,5 +96,14 @@
         "files": [
             "./config/packages/validator.yaml"
         ]
+    },
+    "zenstruck/messenger-test": {
+        "version": "1.11",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "1.7",
+            "ref": "e0d2a904cd584d15bcbb4c4a011549840bc01daf"
+        }
     }
 }
