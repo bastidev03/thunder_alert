@@ -12,6 +12,7 @@ class AlertSmsHandler
 {
     public function __invoke(AlertSms $alert_sms)
     {
+        //dump("AlertSmsHandler : Message received : ".print_r($alert_sms, true));
         $sms_service = new SmsService($alert_sms->getPhoneNumber(), $alert_sms->getMessage());
         $sms_service->sendSms();      
     }

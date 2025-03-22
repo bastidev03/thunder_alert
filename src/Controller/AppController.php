@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -9,7 +10,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use App\Repository\Contact;
 use App\Message\AlertSms;
 
-class AppController
+class AppController extends AbstractController
 {
     private $bus;
 
@@ -44,12 +45,14 @@ class AppController
            
             $http_response->headers->set('Content-Type', 'application/json');
             $http_response->setContent(json_encode([
+                'code' => 'ok',
                 'message' => "Envoi de sms d'alerte à ".(count($contact_list))." contacts",
             ]));
             //$http_response->setContent(json_encode($contact_list));
            
         } catch (\Exception $exception) {
             $http_response->setContent(json_encode([
+                'code' => $exception->getCode(),
                 'message' => $exception->getMessage()
             ]));
         }

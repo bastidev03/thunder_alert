@@ -28,3 +28,4 @@ Ceci est une application backend qui permet d’importer des destinataires depui
 - Utiliser PDO pour les transactions BDD (Doctrine interdit => Pas voulu utiliser PDO)
 - Protéger le point d'entrée /alerter des injections SQL (Utiliser PDO)
 - Utiliser un template pour l'envoi des messages
+- Implémenter des tests unitaires

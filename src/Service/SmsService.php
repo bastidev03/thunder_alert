@@ -34,11 +34,11 @@ class SmsService
 
                 sending_date : ".(date('Y-m-d H:i:s'))."
 
-                content : $message
+                content : {$this->message}
         \n";
           
-        $http_logger = new SymfonyLogger();
-        $http_logger->log($log_message);
+        /*$http_logger = new SymfonyLogger();
+        $http_logger->log($log_message);*/
         Logger::log($log_message, self::LOG_FILE);
     }
 }
