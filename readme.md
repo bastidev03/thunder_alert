@@ -1,21 +1,51 @@
 # Bienvenue sur le projet thunder_alert
 
-Ceci est une application backend qui permet d’importer des destinataires depuis un fichier CSV vers une Base de Donnée, et d’envoyer des alertes météo par SMS à des particuliers.
+Ceci est une application backend qui permet d’importer des destinataires depuis un fichier CSV vers une Base de Donnée, et de simuler des envois d'alertes météo par SMS à des particuliers ([cf. Spécifications.pdf](./Spécifications.pdf)).
 
-## Installations
 
-- Installer Symfony 6.4 via Composer install
+## Pré-requis
+
+- Installer Symfony-CLI 
 - Installer PHP 8.4
 - Installer Postgresql 17.4
+- Installer pgAdmin 4 (Pour administrer la Base de Donnée PostgreSQL)
+
+>**<u>Remarque :</u>** Le projet a été conçu sans l'aide de Docker. Il nécessite d'avoir un serveur Postgresql opérationnel et prêt à recevoir les requêtes de migration.
+
+
+## Installation
+
+- A la racine du projet, lancer la commande suivante :
+
+    ```bash
+        # Installera toutes les dépendances liées au projet
+        Composer install
+    ```
+
+## Configuration
+
+- Configurer Postgresql
+
+    - Créer un utilisateur que l'application pourra utiliser pour exécuter le script de migration et envoyer les requêtes SQL par la suite. (Le superuser postgresql par défaut peut être utilisé)
+
+    - Modifier si besoin dans le fichier `.env`, les configurations suivantes en cohérence avec les configurations du serveur PostgreSQL que vous souhaitez utiliser  : `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PWD` et `DATABASE_URL`.
+
+- Lancer la migrations du model de la BDD vers votre serveur PostgreSQL
+    ```bash
+        # Assurez-vous que le serveur PostgreSQL est en fonctionnement
+        symfony console sql-migrations:execute
+    ```
 
 ## Lancement du projet
-
-- Lancer le serveur PostgreSQL
-- Adapter la configuration du fichier .env à la racine du projet pour y mettre les configurations de votre serveur PostgreSQL 
-- Lancer le script de migration afin de créer la Base 'thunder_alert' et la table 'contacts' dans votre serveur Postgresql 
-- Lancer le serveur Symfony
+ 
+- A la racine du projet, lancer le serveur Symfony avec la commande suivante :
+    ```bash
+        symfony server:start
+    ```
 
 ## Utilisation des fonctionnalités développées
+
+## Problèmes rencontrés
 
 ## Axes d'amélioration
 
