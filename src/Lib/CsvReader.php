@@ -54,7 +54,7 @@ class CsvReader
         $line = 0;
         $array = [];
         $column_mapping = [];
-        while (($line_content = fgetcsv($this->file_resource, 1000, ';')) !== false) {
+        while (($line_content = fgetcsv($this->file_resource, 1000, $_ENV['CSV_SEPARATOR'])) !== false) {
             if($line === 0) {
                 foreach($line_content as $column) {
                     $column_mapping[] = $column;

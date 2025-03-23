@@ -46,7 +46,7 @@ class AppController extends AbstractController
             $http_response->headers->set('Content-Type', 'application/json');
             $http_response->setContent(json_encode([
                 'code' => 'ok',
-                'message' => "Envoi de sms d'alerte à ".(count($contact_list))." contacts",
+                'message' => "Envoi d'un sms d'alerte à ".(count($contact_list))." contacts",
             ]));
             //$http_response->setContent(json_encode($contact_list));
            
